@@ -104,15 +104,15 @@ Along with the issues highlighted in the code itself, there are few more:
 
 1. To know at which stage we failed we need to keep an eye on the special returns from the functions we're using here;
 2. Hard to control that there is a condition to compensate for all possible error cases;
-3. Impossible not keep relative code close to each other, because bare expressions in `with`do not leak to the `else` block;
+3. Impossible to keep related code chunks close to each other, because bare expressions in `with` do not leak to the `else` block;
 4. Hard to test;
-5. Hard to improve, eg. it is hard to add retries, async operations or circuit breaker without making it even worse.
+5. Hard to maintain (adding retries, async operations or circuit breakers lead to significant changes in the codebase).
 
 For some time you might get away by splitting `create_and_subscribe_user/1`, but it only works while number of transactions is very small.
 
 ### Using Sagas
 
-Instead, let's see how that pipeline would look with `Sage`:
+Instead, let's see how that transaction could be rewritten with `Sage`, leveraging pipeline syntax:
 
 ```elixir
 defmodule SageExample do
